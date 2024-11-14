@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -64,12 +64,14 @@ public class Bobble : MonoBehaviour
             var x = (int)Mathf.Round(transform.position.x);
             var y = (int)(transform.position.y / GameManager.Instance.GridBobbles.BobbleSize * 2);
 
-            GameManager.Instance.Combo.CleanLists();
-            GameManager.Instance.Combo.GridBobblesPositions[10+x, 10+y] = this;
-            var result = GameManager.Instance.Combo.CheckNeighbours(x, y, 1, ColorBobble);
+            //Systeme de combo marche pas... 😢
 
-            Debug.Log(result);
-            GameManager.Instance.AddScore(result);
+            //GameManager.Instance.Combo.CleanLists();
+            //GameManager.Instance.Combo.GridBobblesPositions[10+x, 10+y] = this;
+            //var result = GameManager.Instance.Combo.CheckNeighbours(10+x, 10+y, 1, ColorBobble);
+
+            //Debug.Log(result);
+            //GameManager.Instance.AddScore(result);
             _isAline = true;
         }
     }
