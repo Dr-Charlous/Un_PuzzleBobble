@@ -17,22 +17,35 @@ public class GameManager : MonoBehaviour
     }
     #endregion Singleton
 
+    [Header("Components :")]
     public Bobble ActualBobble;
     public CharaController Chara;
+    public Grid GridBobbles;
+    public FallingWall Wall;
+    public UiManager Ui;
+    public ComboManager Combo;
+
+    [Header("Values :")]
+    public bool IsGamePause = false;
+
+    [Header("Walls :")]
     public Transform WallUp;
     public Transform WallRight;
     public Transform WallLeft;
 
+    [Header("Score :")]
+    [SerializeField] int _score = 0;
+    [SerializeField] int _scorePerBobblesPosed = 10;
+
     private void Update()
     {
-        KillPalyer();
         CheckBobble();
     }
 
-    void KillPalyer()
+    public void KillPalyer()
     {
-        if (ActualBobble.transform.position.y <= Chara.transform.position.y)
-            Debug.Log("You die");
+        IsGamePause = true;
+        Debug.Log("You die");
     }
 
     void CheckBobble()
@@ -41,10 +54,25 @@ public class GameManager : MonoBehaviour
         {
             ActualBobble.IsMoving = false;
             ActualBobble.IsArrived = true;
+            ActualBobble.Align(ActualBobble.transform.position);
+
+            AddScore(_scorePerBobblesPosed);
         }
 
         if (ActualBobble.IsArrived)
             ActualBobble = Chara.ActualBobble;
+    }
+
+    public void AddScore(int score)
+    {
+        _score += score;
+        Ui.UpdateText("Score : " + _score);
+    }
+
+    public void AddScore()
+    {
+        _score += _scorePerBobblesPosed;
+        Ui.UpdateText("Score : " + _score);
     }
 
     private void OnDrawGizmos()
@@ -60,19 +88,6 @@ public class GameManager : MonoBehaviour
         points[5] = new Vector2(WallLeft.position.x, Chara.transform.position.y);
         points[6] = new Vector2(WallLeft.position.x, Chara.transform.position.y);
         points[7] = new Vector2(WallLeft.position.x, WallUp.position.y);
-
-        Gizmos.DrawLineList(points);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Vector3[] points = new Vector3[4];
-
-        points[0] = new Vector2(WallLeft.position.x, WallUp.position.y);
-        points[1] = new Vector2(WallRight.position.x, WallUp.position.y);
-        points[2] = new Vector2(WallRight.position.x, Chara.transform.position.y);
-        points[3] = new Vector2(WallLeft.position.x, Chara.transform.position.y);
 
         Gizmos.DrawLineList(points);
     }

@@ -36,10 +36,13 @@ public class CharaController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Rotation();
+        if (!GameManager.Instance.IsGamePause)
+        {
+            Rotation();
 
-        if (_isShooting)
-            Shooting();
+            if (_isShooting)
+                Shooting();
+        }
     }
 
     #region Actions
@@ -48,10 +51,10 @@ public class CharaController : MonoBehaviour
         _direction += Vector3.back * Input.GetAxis("Horizontal") * _speed * Time.deltaTime;
 
         //Max angle of rotation
-        if (_direction.z > 90)
-            _direction = new Vector3(_direction.x, _direction.y, 90);
-        else if (_direction.z < -90)
-            _direction = new Vector3(_direction.x, _direction.y, -90);
+        if (_direction.z > 80)
+            _direction = new Vector3(_direction.x, _direction.y, 80);
+        else if (_direction.z < -80)
+            _direction = new Vector3(_direction.x, _direction.y, -80);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -71,6 +74,7 @@ public class CharaController : MonoBehaviour
             ActualBobble.transform.rotation = Quaternion.Euler(_direction);
             ActualBobble.transform.position = _previewLaunchPoint.position;
             ActualBobble.GetComponent<Bobble>().IsMoving = true;
+            ActualBobble.transform.SetParent(GameManager.Instance.GridBobbles.transform);
 
             ActualBobble = _nextBobble;
             ActualBobble.transform.position = _nillController.transform.position;

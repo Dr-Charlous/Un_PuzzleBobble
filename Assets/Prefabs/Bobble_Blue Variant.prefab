@@ -53,6 +53,10 @@ PrefabInstance:
       value: Bobble_Blue Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6602043041362696404, guid: ebd809c0c975a2b49ab1b14bf9a432ef, type: 3}
+      propertyPath: ColorBobble
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6602043041362696404, guid: ebd809c0c975a2b49ab1b14bf9a432ef, type: 3}
       propertyPath: _colorBobble
       value: 1
       objectReference: {fileID: 0}
