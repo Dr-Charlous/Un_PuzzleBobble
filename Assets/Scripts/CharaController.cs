@@ -10,6 +10,7 @@ public class CharaController : MonoBehaviour
     [Tooltip("The transform of rotating part")]
     [SerializeField] Transform _nillController;
     [SerializeField] Transform _previewPoint;
+    [SerializeField] Transform _previewLaunchPoint;
     [Tooltip("Speed of rotation")]
     [SerializeField] float _speed = 1;
 
@@ -68,6 +69,7 @@ public class CharaController : MonoBehaviour
         if (ActualBobble != null && ActualBobble == GameManager.Instance.ActualBobble)
         {
             ActualBobble.transform.rotation = Quaternion.Euler(_direction);
+            ActualBobble.transform.position = _previewLaunchPoint.position;
             ActualBobble.GetComponent<Bobble>().IsMoving = true;
 
             ActualBobble = _nextBobble;
@@ -80,4 +82,9 @@ public class CharaController : MonoBehaviour
         _isShooting = false;
     }
     #endregion Actions
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(_previewLaunchPoint.position, new Vector2(0.5f, 0.1f));
+    }
 }

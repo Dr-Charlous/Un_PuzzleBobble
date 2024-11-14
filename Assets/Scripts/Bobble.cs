@@ -39,4 +39,15 @@ public class Bobble : MonoBehaviour
             transform.position += transform.up * _speed * Time.deltaTime;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Bobble bobble = collision.GetComponentInParent<Bobble>();
+
+        if (bobble != null && bobble.gameObject != gameObject)
+        {
+            IsMoving = false;
+            IsArrived = true;
+        }
+    }
 }
